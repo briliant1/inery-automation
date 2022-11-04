@@ -13,12 +13,15 @@ options = ["Install node part 1", "install node part 2", "Task 1", "Task 2", "Ta
 
 def install_master_node():
     logging.info("Cloning Inery Node")
-    os.system("git clone https://github.com/inery-blockchain/inery-node")
-    os.system("cd inery-node")
-    os.system("cd inery.setup")
-    os.system("chmod +x ./ine.py")
-    os.system("./ine.py --export")
-    os.system("cd; source .bashrc; cd -")
+    if not os.path.exists("./inery-node"):
+        os.system("git clone https://github.com/inery-blockchain/inery-node")
+        os.system("cd inery-node")
+        os.system("cd inery.setup")
+        os.system("chmod +x ./ine.py")
+        os.system("./ine.py --export")
+        os.system("cd; source .bashrc; cd -")
+    else:
+        logging.warning("INERY NODE FOLDER EXISTS!")
 
 if __name__ == "__main__":
     option, index = pick(options, title)

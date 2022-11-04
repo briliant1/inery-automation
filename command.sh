@@ -7,7 +7,8 @@ libcurl4-gnutls-dev pkg-config patch llvm-7-dev clang-7 vim-common jq libncurses
 sudo ufw allow 22
 sudo ufw allow 8888
 sudo ufw allow 9010
-sudo ufw enable -y
+yes | sudo ufw enable
 python3-pip
 pip install pick
+pip install coloredlogs
 python3 ./main.py

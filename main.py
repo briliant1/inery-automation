@@ -9,7 +9,12 @@ options = ["Install node part 1", "install node part 2", "Task 1", "Task 2", "Ta
 option, index = pick(options, title)
 
 def install_master_node():
-    pass
+    os.system("git clone https://github.com/inery-blockchain/inery-node")
+    os.system("cd inery-node")
+    os.system("cd inery.setup")
+    os.system("chmod +x ine.py")
+    os.system("./ine.py --export")
+    os.system("cd; source .bashrc; cd -")    
 
 
 if index == 0:

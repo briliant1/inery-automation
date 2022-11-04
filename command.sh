@@ -11,4 +11,4 @@ yes | sudo ufw enable
 python3-pip
 pip install pick
 pip install coloredlogs
-python3 ./main.py
+python3 ./inery-automation/main.py

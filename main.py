@@ -20,7 +20,7 @@ def install_master_node():
     os.system("./ine.py --export")
     os.system("cd; source .bashrc; cd -")
 
-while True:
+if __name__ == "__main__":
     option, index = pick(options, title)
     if index == 0:
         install_master_node()

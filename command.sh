@@ -6,4 +6,4 @@ autoconf libtool curl zlib1g-dev sudo ruby libusb-1.0-0-dev \
 libcurl4-gnutls-dev pkg-config patch llvm-7-dev clang-7 vim-common jq libncurses5 \
 python3-pip
 pip install pick
-./main.py
+python3 ./main.py

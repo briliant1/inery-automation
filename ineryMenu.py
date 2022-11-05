@@ -88,6 +88,7 @@ MAIN MENU:
 ===========================================
 
 MASTER NODE MENU : Menu buat setup node dan setup node config
+Wallet Menu      : Create, Unlock Wallet
 Task 1 - 7       : Buat jalankan task 1 -7 ( 1 - 7 Masih WIP BELUM FINAL )
 
 ==========================================="""
@@ -101,7 +102,6 @@ MASTER NODE MENU:
 
 Install Node       : Download Inery Node + Setup Config + Start Node Sync
 Install Part 1B    : jalankan kalau misalkan udah setup config duluan
-Wallet Menu        : Create, Unlock Wallet
 Back to Main Menu  : Balik ke menu utama
 ==========================================="""
 

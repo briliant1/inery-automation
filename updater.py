@@ -26,4 +26,4 @@ def check_update():
 
 def manual_update():
     inery_auto_path = Path(os.getcwd())
-    os.system(f"rm -rf {inery_auto_path}; cd; git clone https://github.com/briliant1/inery-automation.git; chmod +x ./inery-automation/command.sh; chmod +x ./inery-automation/ineryMenu.py;")
+    os.system(f"rm -rf {Path(__file__).parent}; cd; git clone https://github.com/briliant1/inery-automation.git; chmod +x ./inery-automation/command.sh; chmod +x ./inery-automation/ineryMenu.py;")

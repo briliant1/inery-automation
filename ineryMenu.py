@@ -167,12 +167,9 @@ def install_master_node():
         logging.info(innery_node_path)
         os.system(f"git clone https://github.com/inery-blockchain/inery-node {innery_node_path}")
         os.system(f"chmod +x {innery_node_path}/inery.setup/ine.py")
+        os.system(f"{innery_node_path}/inery.setup/ine.py --export")
+        os.system("cd; source .bashrc; cd -")
         
-        bashrc_path = os.path.join(os.getenv('HOME'), '.bashrc')
-        
-        with open(bashrc_path, 'a') as bashrc:
-            bashrc.write(f"{innery_node_path}/inery/bin/")
-
         TaskLogger().set_task_done(Task.INSTALL_NODE)
         
     else:

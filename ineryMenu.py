@@ -238,7 +238,7 @@ def task_two():
     total_token_to_send = input("Berapa token yang mau di kirim ( per akun ) `contoh: 1.0000`:")
     transfer_message = input("Message buat transfer token :")
 
-    accs = accounts.get_node_accounts(10)
+    accs = accounts.get_node_accounts(20)
 
     logging.info("CREATING NEW TOKEN")
     data = os.system(f'''cline push action inery.token create '["{config_file().get_master_account_name}", "{token_supply} {token_symbol}"], "{token_memo}"' -p {config_file().get_master_account_name}''')

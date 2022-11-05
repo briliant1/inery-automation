@@ -79,9 +79,8 @@ def main_menu():
     menu_task_seven = f"Task 7 | {TaskLogger().get_log_status(Task.TASK_SEVEN)} {TaskLogger().get_log_date(Task.TASK_SEVEN)}"
     menu_check_update = f"Check Update"
 
-    title = f"""===========================================
+    title = f"""================={current_version}====================
 MAIN MENU:
-        version {current_version}
 ===========================================
 
 MASTER NODE MENU : Menu buat setup node dan setup node config
@@ -92,9 +91,9 @@ Task 1 - 7       : Buat jalankan task 1 -7 ( 1 - 7 Masih WIP BELUM FINAL )
     option, index = pick(options, title, indicator="➤")
     
     if option == menu_master_menu:
-        master_title = """===========================================
+        master_title = f"""================={current_version}====================
 MASTER NODE MENU:
-        version {current_version}
+===========================================
 
 Install Node       : Download Inery Node + Setup Config + Start Node Sync
 Install Part 1B    : jalankan kalau misalkan udah setup config duluan

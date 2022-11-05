@@ -142,6 +142,7 @@ def setup_config():
 
     logging.info("NODE SYNCING")
     log("NODE START SYNC PILIH MENU CHECK NODE BUAT CHECK STATUSNYA")
+    TaskLogger().set_task_done(Task.SETUP_CONFIG)
     install_master_node_two()
     
 
@@ -152,7 +153,7 @@ def install_master_node_two():
     s = Screen("master_node", True)
     s.send_commands(f"cd {inery_setup_path}")
     s.send_commands(f"./ine.py --master")
-
+    TaskLogger().set_task_done(Task.INSTALL_NODE_B)
     main_menu()
 
 def install_master_node():
@@ -168,6 +169,8 @@ def install_master_node():
         
         with open(bashrc_path, 'a') as bashrc:
             bashrc.write(f"{innery_node_path}/inery/bin/")
+
+        TaskLogger().set_task_done(Task.INSTALL_NODE)
         
     else:
         logging.warning("INERY NODE FOLDER EXISTS!")

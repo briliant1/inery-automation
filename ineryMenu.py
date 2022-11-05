@@ -67,6 +67,10 @@ def main_menu():
     menu_install_node    = f"Install Node      | {TaskLogger().get_log_status(Task.INSTALL_NODE)} {TaskLogger().get_log_date(Task.INSTALL_NODE)}"
     menu_install_node_pb = f"Install Part 1B   | {TaskLogger().get_log_status(Task.INSTALL_NODE)} {TaskLogger().get_log_date(Task.INSTALL_NODE)}"
     menu_setup_config    = f"Setup Config      | {TaskLogger().get_log_status(Task.SETUP_CONFIG)} {TaskLogger().get_log_date(Task.SETUP_CONFIG)}"
+    
+    menu_wallet = f"Wallet Menu"
+    menu_wallet_create_wallet = f"Create New Wallet"
+    menu_wallet_unlock = "Unlock Wallet"
 
     menu_check_node = "Check Node"
 
@@ -87,7 +91,7 @@ MASTER NODE MENU : Menu buat setup node dan setup node config
 Task 1 - 7       : Buat jalankan task 1 -7 ( 1 - 7 Masih WIP BELUM FINAL )
 
 ==========================================="""
-    options = [menu_master_menu, menu_check_node, menu_task_one, menu_task_two, menu_task_three, menu_task_four, menu_task_five, menu_task_six, menu_task_seven,menu_check_update, "Exit"]
+    options = [menu_master_menu, menu_wallet, menu_check_node, menu_task_one, menu_task_two, menu_task_three, menu_task_four, menu_task_five, menu_task_six, menu_task_seven,menu_check_update, "Exit"]
     option, index = pick(options, title, indicator="➤")
     
     if option == menu_master_menu:
@@ -97,6 +101,7 @@ MASTER NODE MENU:
 
 Install Node       : Download Inery Node + Setup Config + Start Node Sync
 Install Part 1B    : jalankan kalau misalkan udah setup config duluan
+Wallet Menu        : Create, Unlock Wallet
 Back to Main Menu  : Balik ke menu utama
 ==========================================="""
 
@@ -112,10 +117,20 @@ Back to Main Menu  : Balik ke menu utama
         if master_node_opt == "Back to Main Menu":
             main_menu()
 
+    if option == menu_wallet:
+        options = [menu_wallet_create_wallet, menu_wallet_unlock, "Back to Main Menu"]
+
+        option, index = pick(options, title, indicator="➤")
+
+        if option == menu_wallet_create_wallet:
+            create_wallet()
+        if option == menu_wallet_unlock:
+            unlock_wallet()
+
     if option == menu_check_node:
-        os.system("screen -R maste")
+        os.system("screen -R master")
     if option == menu_task_one:
-        print("Task 1")
+        task_one()
     if option == menu_task_two:
         print("Task 2")
     if option == menu_task_three:
@@ -185,6 +200,30 @@ def install_master_node():
 
     
     setup_config()
+
+def create_wallet():
+    log("Masukkan detail wallet")
+    print(current_path.parent.parent)
+    nama_wallet = input("Nama wallet yang di mau:")
+    os.system(f"cline wallet create -n {nama_wallet} -f $HOME/wallet.txt")
+    logging.info(f"Import {config_file().get_master_account_name} private key ke wallet {nama_wallet}")
+    os.system(f"cline wallet import --private-key {config_file().get_master_private_key} -n {nama_wallet}")
+    
+
+def unlock_wallet():
+    get_wallet_password = open(os.path.join(current_path.parent.parent, "wallet.txt"), "r")
+    wallet_password = get_wallet_password.readline()
+    log("Masukkan detail wallet")
+    log(f"Pastikan password wallet ada di path ini `{current_path.parent.parent}/wallet.txt`")
+    nama_wallet = input("Nama wallet:")
+    os.system(f'echo "{wallet_password}" | cline wallet unlock -n {nama_wallet}')
+    logging.info(f"WALLET {nama_wallet} unlocked!")
+
+def task_one():
+    logging.critical("PASTIKAN SUDAH CLAIM 50.000 INR DI DASHBOARD!")
+    os.system(f"cline system regproducer {config_file().get_master_account_name} {config_file().get_master_pubblic_key} 0.0.0.0:9010")
+    os.system(f"cline system makeprod approve {config_file().get_master_account_name} {config_file().get_master_account_name}")
+    TaskLogger().set_task_done(Task.TASK_ONE)
 
 if __name__ == "__main__":
     main_menu()

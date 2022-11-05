@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 sudo apt-get update && sudo apt install git && sudo apt install screen
 yes | sudo apt-get install make
 yes | sudo apt-get install bzip2

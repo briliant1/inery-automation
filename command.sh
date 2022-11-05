@@ -38,6 +38,5 @@ pip install pick
 pip install coloredlogs
 pip install screenutils
 chmod +x ./inery-automation/ineryMenu.py
-echo "export PATH=$PATH:$PWD/inery-automation" >> ~/.profile
-echo "export PATH=$PATH:$PWD/inery-node/inery/bin" >> ~/.profile
+echo -e "\nPATH=$PATH:$PWD/inery-automation:$PWD/inery-node/inery/bin" >> ~/.profile
 ineryMenu.py

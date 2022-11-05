@@ -105,7 +105,7 @@ Back to Main Menu  : Balik ke menu utama
             main_menu()
 
     if option == menu_check_node:
-        os.system("screen -R master_node")
+        os.system("screen -R maste")
     if option == menu_task_one:
         print("Task 1")
     if option == menu_task_two:

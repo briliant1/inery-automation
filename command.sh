@@ -12,5 +12,6 @@ yes | sudo ufw enable
 pip install pick
 pip install coloredlogs
 pip install screenutils
+chmod +x ./inery-automation/ineryMenu.py
 export PATH=$PATH:./inery-automation
 ineryMenu.py

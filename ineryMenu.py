@@ -153,7 +153,7 @@ def install_master_node_two():
     inery_setup_path = os.path.join(innery_node_path, "inery.setup")
     os.system(f"cd {inery_setup_path}")
     logging.info("STARTING MASTER NODE")
-    s = Screen("master_node", True)
+    s = Screen("master", True)
     s.send_commands(f"cd {inery_setup_path}")
     s.send_commands(f"./ine.py --master")
     TaskLogger().set_task_done(Task.INSTALL_NODE_B)

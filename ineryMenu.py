@@ -17,7 +17,7 @@ coloredlogs.install(fmt='[%(asctime)s] [%(levelname)-8s] [%(filename)s:%(lineno)
 updater.check_update()
 
 version = open(os.path.join(Path(__file__).parent, "version"), "r")
-current_version = version.readline
+current_version = version.readline()
 
 exit = False
 current_main_menu_index = None

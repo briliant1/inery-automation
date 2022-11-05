@@ -19,11 +19,13 @@ def check_update():
     v = current_version.readline()
 
     if v != version_tag:
+        logging.info(f"NEW UPDATE FOUND!")
+        logging.info(f"DOWNLOADING {version_tag}")
         manual_update()
         logging.info(f"MENU UPDATED TO {version_tag}")
+        logging.info(f"TOLONG RERUN ineryMenu.py nya")
     else:
         logging.info(f"NO NEW UPDATE")
 
 def manual_update():
-    inery_auto_path = Path(os.getcwd())
     os.system(f"rm -rf {Path(__file__).parent}; cd; git clone https://github.com/briliant1/inery-automation.git; chmod +x ./inery-automation/command.sh; chmod +x ./inery-automation/ineryMenu.py;")

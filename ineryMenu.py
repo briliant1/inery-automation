@@ -9,9 +9,12 @@ from pathlib import Path
 import json
 from screenutils import list_screens, Screen
 from task_logger import TaskLogger, Task
+import updater
 
 coloredlogs.install(fmt='[%(asctime)s] [%(levelname)-8s] [%(filename)s:%(lineno)d] %(message)s')
 
+
+updater.check_update()
 
 exit = False
 current_main_menu_index = None
@@ -71,6 +74,7 @@ def main_menu():
     menu_task_five = f"Task 5 | {TaskLogger().get_log_status(Task.TASK_FIVE)} {TaskLogger().get_log_date(Task.TASK_FIVE)}"
     menu_task_six = f"Task 6 | {TaskLogger().get_log_status(Task.TASK_SIX)} {TaskLogger().get_log_date(Task.TASK_SIX)}"
     menu_task_seven = f"Task 7 | {TaskLogger().get_log_status(Task.TASK_SEVEN)} {TaskLogger().get_log_date(Task.TASK_SEVEN)}"
+    menu_check_update = f"Check Update"
 
     title = """===========================================
 MAIN MENU:
@@ -120,6 +124,8 @@ Back to Main Menu  : Balik ke menu utama
         print("Task 6")
     if option == menu_task_seven:
         print("Task 6")
+    if option == menu_check_update:
+        updater.manual_update()
     if option == "Exit":
         logging.info("EXIT!")
     

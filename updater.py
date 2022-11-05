@@ -4,16 +4,18 @@ import os
 import json
 from pathlib import Path
 
-http = urllib3.PoolManager()
+user_agent = {'user-agent': 'inery-automation'}
+
+http = urllib3.PoolManager(10, headers=user_agent)
 
 def check_update():
     r = http.request("GET", "https://api.github.com/repos/briliant1/inery-automation/releases/latest")
-
-    data = json.loads(r.data.decode("utf-8"))
+    dat = r.data.decode("utf-8")
+    data = json.loads(dat)
 
     version_tag = data['tag_name']
 
-    current_version = open("./version", "r")
+    current_version = open(f"{Path(__file__).parent}/version", "r")
     v = current_version.readline()
 
     if v != version_tag:

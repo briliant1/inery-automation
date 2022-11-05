@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+import accounts
 import os
 import time
 from pick import pick
@@ -132,7 +132,7 @@ Back to Main Menu  : Balik ke menu utama
     if option == menu_task_one:
         task_one()
     if option == menu_task_two:
-        print("Task 2")
+        task_two()
     if option == menu_task_three:
         print("Task 3")
     if option == menu_task_four:
@@ -224,6 +224,33 @@ def task_one():
     os.system(f"cline system regproducer {config_file().get_master_account_name} {config_file().get_master_pubblic_key} 0.0.0.0:9010")
     os.system(f"cline system makeprod approve {config_file().get_master_account_name} {config_file().get_master_account_name}")
     TaskLogger().set_task_done(Task.TASK_ONE)
+
+def task_two():
+    logging.info("UNLOCKING WALLET")
+    unlock_wallet()
+    os.system("cline get code inery.token -c token.wasm -a token.abi --wasm")
+    os.system(f"cline set code -j {config_file().get_master_account_name} token.wasm")
+    os.system(f"cline set abi {config_file().get_master_account_name} token.abi")
+    log("CREATE NEW TOKEN!")
+    token_symbol = input("Masukkan 3 digit token symbol, `contoh: INDRO` :")
+    token_supply = input("Masukkan supply token, `contoh: 50000.0000` :")
+    token_memo = input("Masukkan token description/memo :")
+    total_token_to_send = input("Berapa token yang mau di kirim ( per akun ) `contoh: 1.0000`:")
+    transfer_message = input("Message buat transfer token :")
+
+    accs = accounts.get_node_accounts(10)
+
+    logging.info("CREATING NEW TOKEN")
+    data = os.system(f'''cline push action inery.token create '["{config_file().get_master_account_name}", "{token_supply} {token_symbol}"], "{token_memo}"' -p {config_file().get_master_account_name}''')
+    logging.warning(data)
+    logging.info("ISSUEING NEW TOKEN")
+    os.system(f'''cline push action inery.token issue '["{config_file().get_master_account_name}", "{token_supply} {token_symbol}", "{token_memo}"]' -p {config_file().get_master_account_name}''')
+    logging.info("SENDING TOKEN!")
+    os.system(f'''cline push action inery.token transfer '["{config_file().get_master_account_name}", "inery", "{total_token_to_send} {token_symbol}", "{transfer_message}"]' -p {config_file().get_master_account_name}''')
+
+    for acc in accs:
+        os.system(f'''cline push action inery.token transfer '["{config_file().get_master_account_name}", "{acc}", "{total_token_to_send} {token_symbol}", "{transfer_message}"]' -p {config_file().get_master_account_name}''')
+        time.sleep(3)
 
 if __name__ == "__main__":
     main_menu()

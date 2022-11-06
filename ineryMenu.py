@@ -228,6 +228,14 @@ def unlock_wallet():
     os.system(f'echo "{wallet_password}" | cline wallet unlock -n {nama_wallet}')
     logging.info(f"WALLET {nama_wallet} unlocked!")
 
+def add_new_peer():
+    log("Masukkan Peer baru kalian")
+    input_peer = input("Masukkan IP Peer yang mau di tambah `contoh: 192.168.0.0` tanpa port :")
+    os.system(f"")
+    os.system(f"cd {inery_setup_path};./ine.py --add_peer {input_peer}")
+    logging.info(f"New peer : {input_peer} added")
+    
+
 def task_one():
     logging.critical("PASTIKAN SUDAH CLAIM 50.000 INR DI DASHBOARD!")
     os.system(f"cline system regproducer {config_file().get_master_account_name} {config_file().get_master_pubblic_key} 0.0.0.0:9010")

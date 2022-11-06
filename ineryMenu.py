@@ -231,10 +231,14 @@ def unlock_wallet():
 def add_new_peer():
     log("Masukkan Peer baru kalian")
     input_peer = input("Masukkan IP Peer yang mau di tambah `contoh: 192.168.0.0` tanpa port :")
-    os.system(f"")
     os.system(f"cd {inery_setup_path};./ine.py --add_peer {input_peer}")
     logging.info(f"New peer : {input_peer} added")
     
+def stop_node():
+    os.system(f"cd {inery_setup_path}/master.node;./stop.sh")
+
+def restart_node():
+    os.system(f"cd {inery_setup_path};./ine.py --restart")
 
 def task_one():
     logging.critical("PASTIKAN SUDAH CLAIM 50.000 INR DI DASHBOARD!")

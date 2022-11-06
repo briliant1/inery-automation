@@ -237,8 +237,13 @@ def unlock_wallet():
 
 def add_new_peer():
     log("Masukkan Peer baru kalian")
-    input_peer = input("Masukkan IP Peer yang mau di tambah `contoh: 192.168.0.0` tanpa port :")
-    os.system(f"cd {inery_setup_path};./ine.py --add_peer {input_peer}")
+    input_peer = input("Masukkan IP Peer yang mau di tambah `contoh: 192.168.0.0` tanpa port, tambah  `,` buat multiple peer `contoh: 0.0.0.0,1.1.1.1`:")
+    if "," in input_peer:
+        for peer in input_peer.split(","):
+            os.system(f"cd {inery_setup_path};./ine.py --add_peer {peer}")
+    else:
+        os.system(f"cd {inery_setup_path};./ine.py --add_peer {input_peer}")
+
     logging.info(f"New peer : {input_peer} added")
     menu_master_node()
 

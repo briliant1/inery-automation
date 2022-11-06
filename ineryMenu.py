@@ -62,14 +62,48 @@ def log(message):
 	print(message.center(50, ' '))
 	print("==================================================")
 
-def main_menu():
-    menu_master_menu = "Master Node Menu"
+def menu_master_node():
     menu_install_node    = f"Install Node      | {TaskLogger().get_log_status(Task.INSTALL_NODE)} {TaskLogger().get_log_date(Task.INSTALL_NODE)}"
     menu_install_node_pb = f"Install Part 1B   | {TaskLogger().get_log_status(Task.INSTALL_NODE)} {TaskLogger().get_log_date(Task.INSTALL_NODE)}"
     menu_setup_config    = f"Setup Config      | {TaskLogger().get_log_status(Task.SETUP_CONFIG)} {TaskLogger().get_log_date(Task.SETUP_CONFIG)}"
     menu_add_peer = "Add new peer"
     menu_restart_node = "Restart Node"
     menu_stop_node = "Stop Node"
+    master_title = f"""================={current_version}====================
+MASTER NODE MENU:
+===========================================
+
+Install Node       : Download Inery Node + Setup Config + Start Node Sync
+Install Part 1B    : jalankan kalau misalkan udah setup config duluan
+Restart Node       : Restart Node
+Stop Node          : Stop Node yang lagi jalan
+Add new peer       : Tambah peer connection ke node
+Back to Main Menu  : Balik ke menu utama
+==========================================="""
+
+    master_opt = [menu_install_node, menu_install_node_pb, menu_restart_node, menu_stop_node, menu_add_peer, menu_setup_config, "Back to Main Menu"]
+    master_node_opt, master_node_ind = pick(master_opt, master_title, indicator="➤")
+
+    if master_node_opt == menu_install_node:
+        install_master_node()
+    if master_node_opt == menu_install_node_pb:
+        install_master_node_two()
+    if master_node_opt == menu_add_peer:
+        add_new_peer()
+    if master_node_opt == menu_stop_node:
+        stop_node()
+    if master_node_opt == menu_restart_node:
+        restart_node()
+    
+    
+    if master_node_opt == menu_setup_config:
+        setup_config()
+    if master_node_opt == "Back to Main Menu":
+        main_menu()
+
+
+def main_menu():
+    menu_master_menu = "Master Node Menu"
     
     menu_wallet = f"Wallet Menu"
     menu_wallet_create_wallet = f"Create New Wallet"
@@ -99,34 +133,7 @@ Task 1 - 7       : Buat jalankan task 1 -7 ( 1 - 7 Masih WIP BELUM FINAL )
     option, index = pick(options, title, indicator="➤")
     
     if option == menu_master_menu:
-        master_title = f"""================={current_version}====================
-MASTER NODE MENU:
-===========================================
-
-Install Node       : Download Inery Node + Setup Config + Start Node Sync
-Install Part 1B    : jalankan kalau misalkan udah setup config duluan
-Back to Main Menu  : Balik ke menu utama
-==========================================="""
-
-        master_opt = [menu_install_node, menu_install_node_pb, menu_restart_node, menu_stop_node, menu_add_peer, menu_setup_config, "Back to Main Menu"]
-        master_node_opt, master_node_ind = pick(master_opt, master_title, indicator="➤")
-
-        if master_node_opt == menu_install_node:
-            install_master_node()
-        if master_node_opt == menu_install_node_pb:
-            install_master_node_two()
-        if master_node_opt == menu_add_peer:
-            add_new_peer()
-        if master_node_opt == menu_stop_node:
-            stop_node()
-        if master_node_opt == menu_restart_node:
-            restart_node()
-        
-        
-        if master_node_opt == menu_setup_config:
-            setup_config()
-        if master_node_opt == "Back to Main Menu":
-            main_menu()
+        menu_master_node()
 
     if option == menu_wallet:
         options = [menu_wallet_create_wallet, menu_wallet_unlock, "Back to Main Menu"]
@@ -233,7 +240,8 @@ def add_new_peer():
     input_peer = input("Masukkan IP Peer yang mau di tambah `contoh: 192.168.0.0` tanpa port :")
     os.system(f"cd {inery_setup_path};./ine.py --add_peer {input_peer}")
     logging.info(f"New peer : {input_peer} added")
-    
+    menu_master_node()
+
 def stop_node():
     os.system(f"cd {inery_setup_path}/master.node;./stop.sh")
 

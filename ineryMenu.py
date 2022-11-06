@@ -67,6 +67,9 @@ def main_menu():
     menu_install_node    = f"Install Node      | {TaskLogger().get_log_status(Task.INSTALL_NODE)} {TaskLogger().get_log_date(Task.INSTALL_NODE)}"
     menu_install_node_pb = f"Install Part 1B   | {TaskLogger().get_log_status(Task.INSTALL_NODE)} {TaskLogger().get_log_date(Task.INSTALL_NODE)}"
     menu_setup_config    = f"Setup Config      | {TaskLogger().get_log_status(Task.SETUP_CONFIG)} {TaskLogger().get_log_date(Task.SETUP_CONFIG)}"
+    menu_add_peer = "Add new peer"
+    menu_restart_node = "Restart Node"
+    menu_stop_node = "Stop Node"
     
     menu_wallet = f"Wallet Menu"
     menu_wallet_create_wallet = f"Create New Wallet"
@@ -105,13 +108,21 @@ Install Part 1B    : jalankan kalau misalkan udah setup config duluan
 Back to Main Menu  : Balik ke menu utama
 ==========================================="""
 
-        master_opt = [menu_install_node, menu_install_node_pb, menu_setup_config, "Back to Main Menu"]
+        master_opt = [menu_install_node, menu_install_node_pb, menu_restart_node, menu_stop_node, menu_add_peer, menu_setup_config, "Back to Main Menu"]
         master_node_opt, master_node_ind = pick(master_opt, master_title, indicator="➤")
 
         if master_node_opt == menu_install_node:
             install_master_node()
         if master_node_opt == menu_install_node_pb:
             install_master_node_two()
+        if master_node_opt == menu_add_peer:
+            add_new_peer()
+        if master_node_opt == menu_stop_node:
+            stop_node()
+        if master_node_opt == menu_restart_node:
+            restart_node()
+        
+        
         if master_node_opt == menu_setup_config:
             setup_config()
         if master_node_opt == "Back to Main Menu":

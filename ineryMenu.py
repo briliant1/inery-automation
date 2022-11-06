@@ -19,12 +19,14 @@ updater.check_update()
 version = open(os.path.join(Path(__file__).parent, "version"), "r")
 current_version = version.readline()
 
-exit = False
-current_main_menu_index = None
+current_directory = Path(__file__).parent
+outer_directory = current_directory.parent
 
-current_path = Path(__file__)
-innery_node_path = os.path.join(os.getcwd(), "inery-node")
-config_path = os.path.join(innery_node_path, "inery.setup", "tools", "config.json")
+innery_node_path = os.path.join(outer_directory, "inery-node")
+inery_setup_path = os.path.join(innery_node_path, "inery.setup")
+config_path = os.path.join(inery_setup_path, "tools", "config.json")
+
+wallet_password_path = os.path.join(outer_directory, "wallet.txt")
 
 class config_file:
 
@@ -61,8 +63,6 @@ def log(message):
 	print("==================================================")
 
 def main_menu():
-    global current_main_menu_index
-
     menu_master_menu = "Master Node Menu"
     menu_install_node    = f"Install Node      | {TaskLogger().get_log_status(Task.INSTALL_NODE)} {TaskLogger().get_log_date(Task.INSTALL_NODE)}"
     menu_install_node_pb = f"Install Part 1B   | {TaskLogger().get_log_status(Task.INSTALL_NODE)} {TaskLogger().get_log_date(Task.INSTALL_NODE)}"
@@ -188,7 +188,6 @@ def install_master_node():
     logging.info("CLONING INERY NODE GIT")
     log("CLONING INERY NODE GIT")
     if not os.path.exists(innery_node_path):
-        logging.info(os.getcwd())
         logging.info(innery_node_path)
         os.system(f"git clone https://github.com/inery-blockchain/inery-node {innery_node_path}")
         os.system(f"chmod +x {innery_node_path}/inery.setup/ine.py")
@@ -203,7 +202,6 @@ def install_master_node():
 
 def create_wallet():
     log("Masukkan detail wallet")
-    print(current_path.parent.parent)
     nama_wallet = input("Nama wallet yang di mau:")
     os.system(f"cline wallet create -n {nama_wallet} -f $HOME/wallet.txt")
     logging.info(f"Import {config_file().get_master_account_name} private key ke wallet {nama_wallet}")
@@ -211,10 +209,10 @@ def create_wallet():
     
 
 def unlock_wallet():
-    get_wallet_password = open(os.path.join(current_path.parent.parent, "wallet.txt"), "r")
-    wallet_password = get_wallet_password.readline()
+    read_wallet_password = open(wallet_password_path, "r")
+    wallet_password = read_wallet_password.readline()
     log("Masukkan detail wallet")
-    log(f"Pastikan password wallet ada di path ini `{current_path.parent.parent}/wallet.txt`")
+    log(f"Pastikan password wallet ada di path ini `{outer_directory}/wallet.txt`")
     nama_wallet = input("Nama wallet:")
     os.system(f'echo "{wallet_password}" | cline wallet unlock -n {nama_wallet}')
     logging.info(f"WALLET {nama_wallet} unlocked!")

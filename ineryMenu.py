@@ -113,7 +113,7 @@ def main_menu():
 
     menu_task_one = f"Task 1 | {TaskLogger().get_log_status(Task.TASK_ONE)} {TaskLogger().get_log_date(Task.TASK_ONE)}"
     menu_task_two = f"Task 2 | {TaskLogger().get_log_status(Task.TASK_TWO)} {TaskLogger().get_log_date(Task.TASK_TWO)}"
-    menu_task_three = f"Task 3 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_TRHEE)} {TaskLogger().get_log_date(Task.TASK_TRHEE)}"
+    menu_task_three = f"Task 3 | {TaskLogger().get_log_status(Task.TASK_TRHEE)} {TaskLogger().get_log_date(Task.TASK_TRHEE)}"
     menu_task_four = f"Task 4 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_FOUR)} {TaskLogger().get_log_date(Task.TASK_FOUR)}"
     menu_task_five = f"Task 5 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_FIVE)} {TaskLogger().get_log_date(Task.TASK_FIVE)}"
     menu_task_six = f"Task 6 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_SIX)} {TaskLogger().get_log_date(Task.TASK_SIX)}"
@@ -152,7 +152,7 @@ Task 1 - 7       : Buat jalankan task 1 -7 ( 1 - 7 Masih WIP BELUM FINAL )
     if option == menu_task_two:
         task_two()
     if option == menu_task_three:
-        print("Task 3")
+        task_three()
     if option == menu_task_four:
         print("Task 4")
     if option == menu_task_five:
@@ -285,6 +285,100 @@ def task_two():
     for acc in accs:
         os.system(f'''cline push action inery.token transfer '["{config_file().get_master_account_name}", "{acc}", "{total_token_to_send} {token_symbol}", "{transfer_message}"]' -p {config_file().get_master_account_name}''')
         time.sleep(3)
+
+def task_three():
+    logging.info("UNLOCKING WALLET")
+    unlock_wallet()
+    logging.info("CLONING INERY.CDT")
+    os.system("git clone --recursive https://github.com/inery-blockchain/inery.cdt")
+    logging.info("CREATING INRCRUD DIRECTORY")
+    os.system("mkdir -p $HOME/inrcrud")
+    logging.info("WRITE CPP")
+    inrcrud_cpp = open("$HOME/inrcrud/inrcrud.cpp","w")
+    inrcrud_cpp.write("""#include <inery/inery.hpp>
+#include <inery/print.hpp>
+#include <string>
+
+using namespace inery;
+
+using std::string;
+
+class [[inery::contract]] inrcrud : public inery::contract {
+  public:
+    using inery::contract::contract;
+
+
+        [[inery::action]] void create( uint64_t id, name user, string data ) {
+            records recordstable( _self, id );
+            auto existing = recordstable.find( id );
+            check( existing == recordstable.end(), "record with that ID already exists" );
+            check( data.size() <= 256, "data has more than 256 bytes" );
+
+            recordstable.emplace( _self, [&]( auto& s ) {
+               s.id         = id;
+               s.owner      = user;
+               s.data       = data;
+            });
+
+            print( "Hello, ", name{user} );
+            print( "Created with data: ", data );
+        }
+
+         [[inery::action]] void read( uint64_t id ) {
+            records recordstable( _self, id );
+            auto existing = recordstable.find( id );
+            check( existing != recordstable.end(), "record with that ID does not exist" );
+            const auto& st = *existing;
+            print("Data: ", st.data);
+        }
+
+        [[inery::action]] void update( uint64_t id, string data ) {
+            records recordstable( _self, id );
+            auto st = recordstable.find( id );
+            check( st != recordstable.end(), "record with that ID does not exist" );
+
+
+            recordstable.modify( st, get_self(), [&]( auto& s ) {
+               s.data = data;
+            });
+
+            print("Data: ", data);
+        }
+
+            [[inery::action]] void destroy( uint64_t id ) {
+            records recordstable( _self, id );
+            auto existing = recordstable.find( id );
+            check( existing != recordstable.end(), "record with that ID does not exist" );
+            const auto& st = *existing;
+
+            recordstable.erase( st );
+
+            print("Record Destroyed: ", id);
+
+        }
+
+  private:
+    struct [[inery::table]] record {
+       uint64_t        id;
+       name     owner;
+       string          data;
+       uint64_t primary_key()const { return id; }
+    };
+
+    typedef inery::multi_index<"records"_n, record> records;
+ };""")
+
+    logging.info("COMPILING CONTRACT")
+    os.system("inery-cpp $HOME/inrcrud/inrcrud.cpp -o $HOME/inrcrud/inrcrud.wasm")
+    os.system(f"cline set contract {config_file().get_master_account_name} $HOME/inrcrud/")
+    logging.info("CREATE")
+    os.system(f"""cline push action {config_file().get_master_account_name} create '[1, "{config_file().get_master_account_name}", "My first Record"]' -p {config_file().get_master_account_name} --json""")
+    logging.info("READ")
+    os.system(f"""cline push action {config_file().get_master_account_name} read [1] -p {config_file().get_master_account_name} --json""")
+    logging.info("UPDATE")
+    os.system(f"""cline push action {config_file().get_master_account_name} update '[ 1,  "My first Record Modified"]' -p {config_file().get_master_account_name} --json""")
+    logging.info("Destroy")
+    os.system(f"""cline push action {config_file().get_master_account_name} destroy [1] -p {config_file().get_master_account_name} --json""")
 
 if __name__ == "__main__":
     main_menu()

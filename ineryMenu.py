@@ -293,6 +293,8 @@ def task_three():
     unlock_wallet()
     logging.info("CLONING INERY.CDT")
     os.system("git clone --recursive https://github.com/inery-blockchain/inery.cdt")
+    logging.info("SETUP ENVIRONMENT")
+    os.system("""echo -e "\nPATH=$PATH:$HOME/inery.cdt/bin" >> ~/.profile""")
     logging.info("CREATING INRCRUD DIRECTORY")
     os.system("mkdir -p $HOME/inrcrud")
     logging.info("WRITE CPP")

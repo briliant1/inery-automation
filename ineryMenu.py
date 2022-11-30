@@ -287,6 +287,8 @@ def task_two():
         time.sleep(3)
 
 def task_three():
+    inrcrud_path = os.path.join(os.environ['HOME'], "inrcrud")
+    inrcrud_file_path = os.path.join(inrcrud_path, "inrcrud.cpp")
     logging.info("UNLOCKING WALLET")
     unlock_wallet()
     logging.info("CLONING INERY.CDT")
@@ -294,7 +296,7 @@ def task_three():
     logging.info("CREATING INRCRUD DIRECTORY")
     os.system("mkdir -p $HOME/inrcrud")
     logging.info("WRITE CPP")
-    inrcrud_cpp = open("$HOME/inrcrud/inrcrud.cpp","w")
+    inrcrud_cpp = open(inrcrud_file_path,"w")
     inrcrud_cpp.write("""#include <inery/inery.hpp>
 #include <inery/print.hpp>
 #include <string>

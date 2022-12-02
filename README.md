@@ -28,14 +28,19 @@ Pilih Step A atau B , sesuai kondisi node kalian di posisi mana.
    
 
 **B. Step untuk master node yang sudah jalan**
+1. Jalankan Command dibawah
+```
+echo -e "\nPATH=$PATH:$PWD/inery-automation:$PWD/inery-node/inery/bin" >> ~/.profile
+```
+2. Restart SSH
 
-1. jalankan ``ineryMenu.py``
+3. jalankan ``ineryMenu.py``
 
-2. pilih menu ``Wallet Menu``
+4. pilih menu ``Wallet Menu``
 
-3. pilih menu ``Create New Wallet``
+5. pilih menu ``Create New Wallet``
 
-4. Ikuti perintah yang muncul
+6. Ikuti perintah yang muncul
 
    
 

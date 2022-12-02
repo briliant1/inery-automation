@@ -13,6 +13,7 @@ rm -rf ./inery-automation/; git clone https://github.com/briliant1/inery-automat
 3. jalankan command ``ineryMenu.py``
 4. Menu Akan Muncul
    
+Pilih Step A atau B , sesuai kondisi node kalian di posisi mana.
 
 **A. Step untuk master nodenya belum di install**
 

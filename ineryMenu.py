@@ -22,11 +22,14 @@ current_version = version.readline()
 current_directory = Path(__file__).parent
 outer_directory = current_directory.parent
 
-innery_node_path = os.path.join(outer_directory, "inery-node")
-inery_setup_path = os.path.join(innery_node_path, "inery.setup")
-config_path = os.path.join(inery_setup_path, "tools", "config.json")
+# innery_node_path = os.path.join(outer_directory, "inery-node")
+innery_node_path = "~/inery-node/"
+# inery_setup_path = os.path.join(innery_node_path, "inery.setup")
+inery_setup_path = "~/inery-node/inery.setup/"
+# config_path = os.path.join(inery_setup_path, "tools", "config.json")
+config_path = "~/inery-node/inery.setup/tools/config.json"
 
-wallet_password_path = os.path.join(outer_directory, "wallet.txt")
+wallet_password_path = "~/wallet.txt"
 
 class config_file:
 

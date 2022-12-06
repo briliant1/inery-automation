@@ -295,6 +295,7 @@ def task_three():
     os.system("git clone --recursive https://github.com/inery-blockchain/inery.cdt")
     logging.info("SETUP ENVIRONMENT")
     os.system("""echo -e "\nPATH=$PATH:$HOME/inery.cdt/bin" >> ~/.profile""")
+    os.system("""echo -e "\nPATH=$PATH:$HOME/inery-node/inery/bin" >> ~/.profile""")
     os.system(f"cline set contract {config_file().get_master_account_name} $HOME/inery-automation/inrcrud")
     logging.info("CREATE")
     os.system(f"""cline push action {config_file().get_master_account_name} create '[1, "{config_file().get_master_account_name}", "My first Record"]' -p {config_file().get_master_account_name} --json""")

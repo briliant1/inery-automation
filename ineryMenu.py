@@ -23,14 +23,16 @@ current_directory = Path(__file__).parent
 outer_directory = current_directory.parent
 
 root_path = os.environ['HOME']
-# innery_node_path = os.path.join(outer_directory, "inery-node")
 innery_node_path = f"{root_path}/inery-node/"
-# inery_setup_path = os.path.join(innery_node_path, "inery.setup")
-inery_setup_path = f"{root_path}/inery-node/inery.setup/"
-# config_path = os.path.join(inery_setup_path, "tools", "config.json")
+inery_bin = f"{innery_node_path}/inery/bin/"
+inery_setup_path = f"{innery_node_path}/inery.setup/"
+
 config_path = f"{root_path}/inery-node/inery.setup/tools/config.json"
 
 wallet_password_path = f"{root_path}/wallet.txt"
+
+os.environ['PATH'] += inery_bin
+os.environ['PATH'] += inery_setup_path
 
 class config_file:
 
@@ -231,7 +233,11 @@ def create_wallet():
     
 
 def unlock_wallet():
-    read_wallet_password = open(wallet_password_path, "r")
+    try:
+        read_wallet_password = open(wallet_password_path, "r")
+    except:
+        read_wallet_password = input("Masukkan path kamu menyimpan wallet, contoh (/root/walletku.txt):")
+
     wallet_password = read_wallet_password.readline()
     log("Masukkan detail wallet")
     log(f"Pastikan password wallet ada di path ini `{outer_directory}/wallet.txt`")

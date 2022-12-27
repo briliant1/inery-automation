@@ -135,7 +135,8 @@ Wallet Menu      : Create, Unlock Wallet
 Task 1 - 7       : Buat jalankan task 1 -7 ( 1 - 7 Masih WIP BELUM FINAL )
 
 ==========================================="""
-    options = [menu_master_menu, menu_wallet, menu_check_node, menu_task_one, menu_task_two, menu_task_three, menu_task_four, menu_task_five, menu_task_six, menu_task_seven,menu_check_update, "Exit"]
+    # options = [menu_master_menu, menu_wallet, menu_check_node, menu_task_one, menu_task_two, menu_task_three, menu_task_four, menu_task_five, menu_task_six, menu_task_seven,menu_check_update, "Exit"]
+    options = [menu_master_menu, menu_wallet, menu_check_node, menu_task_one, menu_task_two, menu_task_three, menu_task_four,menu_check_update, "Exit"]
     option, index = pick(options, title, indicator="➤")
     
     if option == menu_master_menu:

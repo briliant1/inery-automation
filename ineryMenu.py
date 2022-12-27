@@ -265,8 +265,8 @@ def restart_node():
 
 def task_one():
     logging.critical("PASTIKAN SUDAH CLAIM 50.000 INR DI DASHBOARD!")
-    os.system(f"cline system regproducer {config_file().get_master_account_name} {config_file().get_master_pubblic_key} 0.0.0.0:9010")
-    os.system(f"cline system makeprod approve {config_file().get_master_account_name} {config_file().get_master_account_name}")
+    os.system(f"cline master bind {config_file().get_master_account_name} {config_file().get_master_pubblic_key} 0.0.0.0:9010")
+    os.system(f"cline master approve {config_file().get_master_account_name}")
     TaskLogger().set_task_done(Task.TASK_ONE)
 
 def task_two():

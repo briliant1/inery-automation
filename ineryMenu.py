@@ -120,10 +120,10 @@ def main_menu():
     menu_task_one = f"Task 1 | {TaskLogger().get_log_status(Task.TASK_ONE)} {TaskLogger().get_log_date(Task.TASK_ONE)}"
     menu_task_two = f"Task 2 | {TaskLogger().get_log_status(Task.TASK_TWO)} {TaskLogger().get_log_date(Task.TASK_TWO)}"
     menu_task_three = f"Task 3 | {TaskLogger().get_log_status(Task.TASK_TRHEE)} {TaskLogger().get_log_date(Task.TASK_TRHEE)}"
-    menu_task_four = f"Task 4 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_FOUR)} {TaskLogger().get_log_date(Task.TASK_FOUR)}"
-    menu_task_five = f"Task 5 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_FIVE)} {TaskLogger().get_log_date(Task.TASK_FIVE)}"
-    menu_task_six = f"Task 6 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_SIX)} {TaskLogger().get_log_date(Task.TASK_SIX)}"
-    menu_task_seven = f"Task 7 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_SEVEN)} {TaskLogger().get_log_date(Task.TASK_SEVEN)}"
+    menu_task_four = f"Task 4 | {TaskLogger().get_log_status(Task.TASK_FOUR)} {TaskLogger().get_log_date(Task.TASK_FOUR)}"
+    # menu_task_five = f"Task 5 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_FIVE)} {TaskLogger().get_log_date(Task.TASK_FIVE)}"
+    # menu_task_six = f"Task 6 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_SIX)} {TaskLogger().get_log_date(Task.TASK_SIX)}"
+    # menu_task_seven = f"Task 7 (NOT READY) | {TaskLogger().get_log_status(Task.TASK_SEVEN)} {TaskLogger().get_log_date(Task.TASK_SEVEN)}"
     menu_check_update = f"Check Update"
 
     title = f"""================={current_version}====================
@@ -160,13 +160,13 @@ Task 1 - 7       : Buat jalankan task 1 -7 ( 1 - 7 Masih WIP BELUM FINAL )
     if option == menu_task_three:
         task_three()
     if option == menu_task_four:
-        print("Task 4")
-    if option == menu_task_five:
-        print("Task 5")
-    if option == menu_task_six:
-        print("Task 6")
-    if option == menu_task_seven:
-        print("Task 6")
+        task_four()
+    # if option == menu_task_five:
+        # print("Task 5")
+    # if option == menu_task_six:
+        # print("Task 6")
+    # if option == menu_task_seven:
+        # print("Task 6")
     if option == menu_check_update:
         updater.manual_update()
     if option == "Exit":
@@ -315,6 +315,10 @@ def task_three():
     os.system(f"""cline push action {config_file().get_master_account_name} update '[ 1,  "My first Record Modified"]' -p {config_file().get_master_account_name} --json""")
     logging.info("Destroy")
     os.system(f"""cline push action {config_file().get_master_account_name} destroy [1] -p {config_file().get_master_account_name} --json""")
+
+def task_four():
+    os.system("wget --no-check-certificate --no-cache --no-cookies -q -O task4.sh https://raw.githubusercontent.com/node-ronin/testnet_tutorial/main/inery/task-4/task4.sh && chmod +x task4.sh")
+    os.system("./task4.sh")
 
 if __name__ == "__main__":
     main_menu()
